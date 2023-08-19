@@ -44,7 +44,6 @@
 .form button:hover{
     background-color: #082ea0;
     color: #FFF;
-    transform: 5s;
 }
 .form textarea{
     margin-bottom: 12px;
@@ -59,4 +58,9 @@
     text-decoration: none;
     margin: 14px 0;
     font-size: 14px;
+    cursor: pointer;
+}
+
+.button-link:hover{
+    cursor: pointer;
 }

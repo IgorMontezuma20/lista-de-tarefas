@@ -1,16 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import "./home.css";
+
+import { Link } from "react-router-dom";
+
+import { auth } from "../../firebaseConnection";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleLogin(e) {
+  const navigate = useNavigate();
+
+  async function handleLogin(e) {
     e.preventDefault();
 
     if (email !== "" && password !== "") {
-      alert("teste");
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          navigate("/admin", { replace: true });
+        })
+        .catch((e) => {
+          alert("erro: " + e.message);
+          console.log("Erro ao efetuar o login!");
+        });
     } else {
       alert("Preencha todos os campos!");
     }
@@ -19,7 +34,7 @@ export default function Home() {
   return (
     <div className="home-container">
       <h1>Lista de tarefas</h1>
-      <span>Organize suas tarefas de forma mais fácil.</span>
+      <span>Gerencie sua agenda de forma fácil.</span>
 
       <form className="form" onSubmit={handleLogin}>
         <input
@@ -28,10 +43,10 @@ export default function Home() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <input
-          autoComplete={false}
           type="password"
-          placeholder="Digite sua senha..."
+          placeholder="******"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -40,7 +55,7 @@ export default function Home() {
       </form>
 
       <Link className="button-link" to="/register">
-        Não possui uma conta? cadastre-se agora.
+        Não possui uma conta? Cadastre-se
       </Link>
     </div>
   );
