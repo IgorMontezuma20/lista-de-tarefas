@@ -41,6 +41,12 @@
 .btn-delete{
     color: #ffcc23;
     background-color: transparent;
+    transition: all 0.5s;
+}
+
+.btn-delete:hover{
+    background-color: rgb(14, 131, 14);
+    color: #FFF
 }
 
 .btn-logout{
